@@ -1,8 +1,19 @@
 ---
-- hosts: apache
+- hosts: servidores
   sudo: yes
   tasks:
-    - name: install apache2
-      apt: name=apache2 update_cache=yes state=latest
+    - name: install apache2+php5
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+        - apache2
+        - php5
+        - php5-mysql
+      notify:
+        - restart apache2
+    
     - name: copy index.html
       template: src=templates/index.j2 dest=/var/www/html/index.html owner=www-data group=www-data mode=0644
+
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted

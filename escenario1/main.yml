@@ -1,1 +1,2 @@
 - include: playbooks/apache2/main.yaml
+- include: playbooks/mysql/main.yaml
