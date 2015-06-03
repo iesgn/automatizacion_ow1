@@ -1,5 +1,0 @@
-apache_flavor: "prefork"
-# Default apache base directory (without trailing '/')
-apache_root: "/var/www"
-
-

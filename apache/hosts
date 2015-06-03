@@ -1,0 +1,2 @@
+[apache]
+212.231.128.33 ansible_ssh_user=debian
