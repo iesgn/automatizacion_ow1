@@ -4,7 +4,7 @@
   
   tasks:
     - name: install unzip
-      apt: name={{ item }} update_cache=yes state=latest
+      apt: name={{ item }} state=latest
       with_items:
         - unzip
     - name: download wordpress
@@ -13,9 +13,12 @@
       unarchive: src=/tmp/latest.zip dest=/var/www/html copy=no owner=www-data group=www-data mode=0744
     
     - name: copy wp.sql
-      template: src=tempaltess/wp.sql.j2 dest=/tmp/wp.sql
+      template: src=templates/wp.sql.j2 dest=/tmp/wp.sql
 
     - name: create database wordpress
+      mysql_db: name=wordpress state=present
+
+    - name: import database wordpress
       mysql_db: name=wordpress state=import target=/tmp/wp.sql
 
     - name: create user mysql wordpress
@@ -25,3 +28,6 @@
 
     - name: copy wp-config.php
       copy: src=files/wp-config.php dest=/var/www/html/wordpress/wp-config.php owner=www-data group=www-data mode=0744
+
+    - name: ensure apache2 restart
+      service: name=apache2 state=restarted
