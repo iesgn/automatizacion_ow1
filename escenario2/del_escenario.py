@@ -16,13 +16,15 @@ def get_nova_creds():
 # Me conecto al cloud
 nova = client.Client(**get_nova_creds())
 
-server=nova.servers.find(name=nombre1)
-# Selecciono la ip flotente 
-ip_flotante =  server.networks.items()[0][1][1]
-# elimino la instancia
-server.delete()
+for nomserver in [nombre1,nombre2]:
 
-nova.floating_ips.delete(nova.floating_ips.find(ip=ip_flotante))
+	server=nova.servers.find(name=nomserver)
+	# Selecciono la ip flotente 
+	ip_flotante =  server.networks.items()[0][1][1]
+	# elimino la instancia
+	server.delete()
+	nova.floating_ips.delete(nova.floating_ips.find(ip=ip_flotante))
+	print "Delete %s" % nomserver
 
 
 
