@@ -1,0 +1,5 @@
+[servidores_web]
+seridor1 ansible_ssh_host=212.231.128.33 ansible_ssh_user=debian
+
+[servidor_mysql]
+servidor_mysql ansible_ssh_host=212.231.128.33 ansible_ssh_user=debian

@@ -1,5 +1,5 @@
 ---
-- hosts: servidores
+- hosts: servidores_web
   sudo: yes
   tasks:
     - name: install apache2+php5

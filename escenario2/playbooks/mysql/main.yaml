@@ -1,5 +1,5 @@
 ---
-- hosts: servidores
+- hosts: servidor_mysql
   sudo: yes
   vars:
     mysql_root_db_pass: 'asdasd'
@@ -9,13 +9,22 @@
       with_items:
         - mysql-server
         - python-mysqldb 
-      
-    
-         
+
+- name: Ensure mysql binds to internal interface
+  template: >
+    src=template/my.cnf 
+    dest=/etc/mysql/my.cnf 
+    owner=root 
+    group=root 
+    mode=0644
+  notify: restart mysql
+
+             
     
     - name: update mysql root password for all root accounts
       mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}
       with_items:
+        - {{ ansible_hostname }}
         - localhost
     
     - name: copy .my.cnf file with root password credentials

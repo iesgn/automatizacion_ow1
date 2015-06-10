@@ -1,0 +1,33 @@
+---
+- hosts: servidoer_web
+  sudo: yes
+  
+  tasks:
+    - name: install unzip
+      apt: name={{ item }} state=latest
+      with_items:
+        - unzip
+    - name: download wordpress
+      get_url: url=https://wordpress.org/latest.zip dest=/tmp/latest.zip mode=0640
+    - name: unzip wordpress
+      unarchive: src=/tmp/latest.zip dest=/var/www/html copy=no owner=www-data group=www-data mode=0744
+    
+    - name: copy wp.sql
+      template: src=templates/wp.sql.j2 dest=/tmp/wp.sql
+
+    - name: create database wordpress
+      mysql_db: name=wordpress state=present
+
+    - name: import database wordpress
+      mysql_db: name=wordpress state=import target=/tmp/wp.sql
+
+    - name: create user mysql wordpress
+      mysql_user: name=user_wp host={{ item }} password="asdasd" priv=wordpress.*:ALL,GRANT
+      with_items:
+        - localhost
+
+    - name: copy wp-config.php
+      copy: src=files/wp-config.php dest=/var/www/html/wordpress/wp-config.php owner=www-data group=www-data mode=0744
+
+    - name: ensure apache2 restart
+      service: name=apache2 state=restarted
