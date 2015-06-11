@@ -3,8 +3,8 @@ from novaclient.v1_1 import client
 import os,sys
 import time
 
-imagen="Debian-8-ow"
-red='00000335-net'
+imagen="Debian 8.0"
+red='red1'
 clave='clave-ow'
 seguridad='default'
 sabor='ssd.XXXS'
@@ -16,6 +16,7 @@ def get_nova_creds():
     d['api_key'] = os.environ['OS_PASSWORD']
     d['auth_url'] = os.environ['OS_AUTH_URL']
     d['project_id'] = os.environ['OS_TENANT_NAME']
+    d['region_name']=os.environ['OS_REGION_NAME']
     return d
 
 # Me conecto al cloud
@@ -61,10 +62,10 @@ print "Instancia %s creada y activa... con la ip %s"%(nombre1,floating_ip.ip)
 #Selecciono el grupo de seguridad
 
 secgroup = nova.security_groups.find(name="default")
-nova.security_group_rules.create( secgroup.id,ip_protocol="tcp",from_port="3128",to_port="3128",cidr="0.0.0.0/0")
+nova.security_group_rules.create(secgroup.id,ip_protocol="tcp",from_port="3128",to_port="3128",cidr="0.0.0.0/0")
 
 server2 = nova.servers.create(name = nombre2,image = image.id,flavor = flavor.id,nics =[{'net-id': network.id}] ,key_name = keypair.name)
-server2.security_groups.append(nova.security_groups.find(name="mysql"))
+server2.security_groups.append(nova.security_groups.find(name="default"))
 
 status = server2.status
 sys.stdout.write('Building...')
