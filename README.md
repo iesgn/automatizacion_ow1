@@ -1,18 +1,18 @@
 # Ejemplos de scripts de automatización. Introducción a OpenStack
 
-## Escenario 1: Una instancia con wordpress
+## Escenario 1 (shell + ansible): Una instancia con wordpress
 
 * escenario.sh: Script bash que crea una instancia, indicando los siguientes datos: imagen, red, sabor, grupo de seguridad, calve ssh y nombre.
 * main.yaml: Receta ansible que despliega de forma automática una aplicación web Wordpress en la instancia creada anteriormente.
 * del_escenario-sh: script bash, que borra la instancia y la ip flotente.
 
-## Escenario 2: Dos instancias (servidor de base de datos y servidor web) con wordpress
+## Escenario 2 (python + ansible): Dos instancias (servidor de base de datos y servidor web) con wordpress
 
 * escenario.py: Programa python que crea dos instancias, además abre el puerto 3128 en el grupo de seguridad "default". Asocia una ip flotante a cada instancia.
 * main.yaml: Receta ansible que configura un servidor web en la primera instancia y un servidor mysql en la segunda. Además instala una aplicación web wordpress en el servidor web.
 * del_escenario.py: Programa python que borra la infraestructura creada.
 
-## Escenario 3: Creación automática de un escenario
+## Escenario 3 (shell): Creación automática de un escenario
 
 <img src="http://iesgn.github.io/ow1/curso/u6/img/escenario4.png"7>
 
