@@ -18,3 +18,7 @@
 
 * demo.sh: Crea el escenario que tenemos en la imágen. Una vez ejecutado el script tendremos el escenario completamente configurado y operativo y podremos acceder a la instancia que tiene asociada una IP flotante y desde ella a las demás.
 * demo-inv.sh: Elimina correctamente todos los elementos del escenario anterior.
+
+## Escenario 4 (cloud-init): Creación de instancia con wordpress
+
+* cloud-config.yaml: Fichero yaml cloud-config que instala un servidor web y mysql al crear una instancia y configura en ella la aplicación web wordpress.
