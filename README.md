@@ -25,8 +25,8 @@
 
 Para accder a la aplicación wordpres tenemos que acceder a la URL:
 
-http://<em>nombre_instancia</em>.novalocal
+**http://*nombre_instancia*.novalocal**
 
 Utilizando resolución estática, añadimos a /etc/hosts de nuestro equipo:
 
-*IP Flotante* *nombre_instancia*.novalocal
+*IP_Flotante* *nombre_instancia*.novalocal
