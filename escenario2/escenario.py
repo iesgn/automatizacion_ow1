@@ -57,8 +57,6 @@ server1.add_floating_ip(floating_ip)
 
 print "Instancia %s creada y activa... con la ip %s"%(nombre1,floating_ip.ip)
 
-# creo un grupo de seguridad para mysqlcon el puerto 3128 abierto
-
 #Selecciono el grupo de seguridad
 
 secgroup = nova.security_groups.find(name="default")
