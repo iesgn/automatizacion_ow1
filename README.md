@@ -1,3 +1,5 @@
+# Ejemplos de scripts de automatización. Introducción a OpenStack
+
 ## Escenario 1: Una instancia con wordpress
 
 * escenario.sh: Script bash que despliega una instancia, indicando los siguientes datos: imagen, red, sabor, grupo de seguridad, calve ssh y nombre.
