@@ -1,0 +1,173 @@
+heat_template_version: 2013-05-23
+
+description: >
+  An example Heat Orchestration Template (HOT).
+  WordPress is web software you can use to create a beautiful website
+  or blog. This template installs two instances: one running a
+  WordPress deployment and the other using a local MySQL database to
+  store the data.
+
+  Falta configurar fichero de configuración de Wordpress para que utilice
+  la dirección IP del servidor de base de datos. 
+  Cambiar manera de obtención de IP
+parameters:
+
+  key_name:
+    type: string
+    description : Name of a KeyPair to enable SSH access to the instance
+    default: jdmr
+
+  instance_type:
+    type: string
+    description: Instance type for web and DB servers
+    default: m1.small
+    constraints:
+      - allowed_values: [m1.tiny, m1.small, m1.medium, m1.large, m1.xlarge]
+        description: instance_type must be a valid instance type
+
+  image_id:
+    type: string
+    description: >
+      Name or ID of the image to use for the WordPress server.
+    default: Fedora 20
+
+  db_name:
+    type: string
+    description: WordPress database name
+    default: wordpress
+    constraints:
+      - length: { min: 1, max: 64 }
+        description: db_name must be between 1 and 64 characters
+      - allowed_pattern: '[a-zA-Z][a-zA-Z0-9]*'
+        description: >
+          db_name must begin with a letter and contain only alphanumeric
+          characters
+  db_username:
+    type: string
+    description: The WordPress database admin account username
+    default: admin
+    hidden: true
+    constraints:
+      - length: { min: 1, max: 16 }
+        description: db_username must be between 1 and 16 characters
+      - allowed_pattern: '[a-zA-Z][a-zA-Z0-9]*'
+        description: >
+          db_username must begin with a letter and contain only alphanumeric
+          characters
+  db_password:
+    type: string
+    description: The WordPress database admin account password
+    default: admin
+    hidden: true
+    constraints:
+      - length: { min: 1, max: 41 }
+        description: db_password must be between 1 and 41 characters
+      - allowed_pattern: '[a-zA-Z0-9]*'
+        description: db_password must contain only alphanumeric characters
+
+  db_root_password:
+    type: string
+    description: Root password for MySQL
+    default: admin
+    hidden: true
+    constraints:
+      - length: { min: 1, max: 41 }
+        description: db_root_password must be between 1 and 41 characters
+      - allowed_pattern: '[a-zA-Z0-9]*'
+        description: db_root_password must contain only alphanumeric characters
+
+
+resources:
+  DatabaseServer:
+    type: OS::Nova::Server
+    properties:
+      image: { get_param: image_id }
+      flavor: { get_param: instance_type }
+      key_name: { get_param: key_name }
+      networks: [{"network":"red de josedom"}]
+      user_data:
+        str_replace:
+          template: |
+            #!/bin/bash -v
+
+            yum -y install mariadb mariadb-server
+            touch /var/log/mariadb/mariadb.log
+            chown mysql.mysql /var/log/mariadb/mariadb.log
+            systemctl start mariadb.service
+
+            # Setup MySQL root password and create a user
+            mysqladmin -u root password db_rootpassword
+            cat << EOF | mysql -u root --password=db_rootpassword
+            CREATE DATABASE db_name;
+            GRANT ALL PRIVILEGES ON db_name.* TO "db_user"@"%"
+            IDENTIFIED BY "db_password";
+            FLUSH PRIVILEGES;
+            EXIT
+            EOF
+          params:
+            db_rootpassword: { get_param: db_root_password }
+            db_name: { get_param: db_name }
+            db_user: { get_param: db_username }
+            db_password: { get_param: db_password }
+
+  WebServer:
+    type: OS::Nova::Server
+    properties:
+      image: { get_param: image_id }
+      flavor: { get_param: instance_type }
+      key_name: { get_param: key_name }
+      networks: [{"network":"red de josedom"}]
+      user_data:
+        str_replace:
+          template: |
+            #!/bin/bash -v
+
+            yum -y install httpd wordpress
+
+            sed -i "/Deny from All/d" /etc/httpd/conf.d/wordpress.conf
+            sed -i "s/Require local/Require all granted/" /etc/httpd/conf.d/wordpress.conf
+            sed -i s/database_name_here/db_name/ /etc/wordpress/wp-config.php
+            sed -i s/username_here/db_user/      /etc/wordpress/wp-config.php
+            sed -i s/password_here/db_password/  /etc/wordpress/wp-config.php
+            sed -i s/localhost/db_host/        /etc/wordpress/wp-config.php
+
+
+            setenforce 0 # Otherwise net traffic with DB is disabled
+            systemctl start httpd.service
+          params:
+            db_rootpassword: { get_param: db_root_password }
+            db_name: { get_param: db_name }
+            db_user: { get_param: db_username }
+            db_password: { get_param: db_password }
+            db_host: { get_attr: [DatabaseServer, networks, "red de josedom", 0] }
+
+  floating_ip:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network_id: "a86fc437-de50-4034-8e1a-f37a7b05537f"
+
+  floating_ip_1:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network_id: "a86fc437-de50-4034-8e1a-f37a7b05537f"
+
+  association:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip }
+      port_id: {get_attr: [DatabaseServer, addresses, "red de josedom", 0, port]}
+
+  association_1:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip_1}
+      port_id: {get_attr: [WebServer, addresses, "red de josedom", 0, port]}
+
+outputs:
+  WebsiteURL:
+    description: URL for Wordpress wiki
+    value:
+      str_replace:
+        template: http://host/wordpress
+        params:
+          host: { get_attr: [WebServer, networks, private, 0] }
