@@ -1,8 +1,7 @@
 #cloud-config
 
 apt_update: true
-
-#apt_upgrade: true
+apt_upgrade: true
 
 packages:
  - wordpress
@@ -27,7 +26,7 @@ configapache:
        ServerName $public_hostname
        ServerAlias $public_ipv4
 
-       VirtualDocumentRoot /var/www/html/$public_hostname
+       DocumentRoot /var/www/html/$public_hostname
        RewriteEngine on
        RewriteRule ^/wp-uploads/(.*)$ /var/www/html/wp-uploads/%{HTTP_HOST}/\$1
 
@@ -38,7 +37,7 @@ configapache:
    EOF
    a2enmod rewrite vhost_alias
    a2ensite wordpress
-
+   a2dissite 000-default
 configpostfix:
  - &config_postfix |
    public_hostname=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)

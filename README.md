@@ -22,3 +22,11 @@
 ## Escenario 4 (cloud-init): Creación de instancia con wordpress
 
 * cloud-config.yaml: Fichero yaml cloud-config que instala un servidor web y mysql al crear una instancia y configura en ella la aplicación web wordpress.
+
+Para accder a la aplicación wordpres tenemos que acceder a la URL:
+
+		http://*nombre_instancia*.novalocal
+
+Utilizando resolución estática, añadimos a /etc/hosts de nuestro equipo:
+
+		*IP Flotante* *nombre_instancia*.novalocal
