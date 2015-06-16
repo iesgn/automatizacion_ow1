@@ -29,4 +29,4 @@ http://<em>nombre_instancia</em>.novalocal
 
 Utilizando resolución estática, añadimos a /etc/hosts de nuestro equipo:
 
-		*IP Flotante* *nombre_instancia*.novalocal
+*IP Flotante* *nombre_instancia*.novalocal
