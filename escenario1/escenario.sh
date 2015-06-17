@@ -4,7 +4,7 @@ IMAGEN='b10a9d97-dce3-48e9-89f5-955362714c5c'
 RED='red1'
 CLAVE='clave-ow'
 SEGURIDAD='default'
-SABOR='ssd.XXXS'
+SABOR='ssd.XXS'
 NOMBRE="pc1"
 
 # Obtenemos el id de la red
@@ -25,12 +25,6 @@ IP=$(nova floating-ip-create ext-net|awk 'NR==4'|awk '{print $2}')
 echo 'IP flotante asignada '$IP
 nova floating-ip-associate $NOMBRE $IP
 
-ESTATUS=$(nova show $NOMBRE|grep status|awk '{print $4}')
-while [ "$STATUS" != "ACTIVE" ]; do
-	echo $ESTATUS
-	ESTATUS=$(nova show $NOMBRE|grep status|awk '{print $4}')
-done
-
 
 echo ""
 echo "###############################################################################"
@@ -40,6 +34,14 @@ echo "#                                                                         
 echo "# ssh -i ~/.ssh/$CLAVE debian@$IP                                             #"
 echo "#                                                                             #"
 echo "###############################################################################"
+
+STATUS=$(nova show $NOMBRE|grep status|awk '{print $4}')
+while [ "$STATUS" != "ACTIVE" ]
+do
+	echo "$STATUS"
+	sleep 10;
+	STATUS=$(nova show $NOMBRE|grep status|awk '{print $4}')
+done
 
 echo "Ejecutando receta ansible..."
 echo "[servidores]\n$NOMBRE ansible_ssh_host=$IP ansible_ssh_user=debian">hosts

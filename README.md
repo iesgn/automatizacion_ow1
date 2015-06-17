@@ -23,7 +23,6 @@
 
 * cloud-config.yaml: Fichero yaml cloud-config que instala un servidor web y mysql al crear una instancia y configura en ella la aplicación web wordpress.
 
-<<<<<<< HEAD
 Para acceder a la aplicación wordpres tenemos que utilizar la URL:
 =======
 ### Ejemplo de uso
@@ -41,7 +40,7 @@ Vamos a crear una instancia que se llame wordpress:
   		nova floating-ip-associate wordpress 212.231.128.188
 
 Para accder a la aplicación wordpres tenemos que acceder a la URL:
->>>>>>> 4b49105c7eacc4fe44943c9961d043eb17c3f836
+
 
 		http://wordpress.novalocal
 
