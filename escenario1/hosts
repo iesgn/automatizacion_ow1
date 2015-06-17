@@ -1,4 +1,2 @@
 [servidores]
-#seridor1 ansible_ssh_host=212.231.128.33 ansible_ssh_user=debian
-#seridor2 ansible_ssh_host=212.231.128.42 ansible_ssh_user=debian
-seridor1 ansible_ssh_host=185.45.74.140 ansible_ssh_user=debian
+pc1 ansible_ssh_host=212.231.129.27 ansible_ssh_user=debian

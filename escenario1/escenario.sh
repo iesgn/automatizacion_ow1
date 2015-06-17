@@ -1,7 +1,7 @@
 #!/bin/bash
 
-IMAGEN='5e3a5ae7-cee5-41ab-9f4a-8289044da1a5'
-RED='00000335-net'
+IMAGEN='b10a9d97-dce3-48e9-89f5-955362714c5c'
+RED='red1'
 CLAVE='clave-ow'
 SEGURIDAD='default'
 SABOR='ssd.XXXS'
@@ -25,12 +25,23 @@ IP=$(nova floating-ip-create ext-net|awk 'NR==4'|awk '{print $2}')
 echo 'IP flotante asignada '$IP
 nova floating-ip-associate $NOMBRE $IP
 
+ESTATUS=$(nova show $NOMBRE|grep status|awk '{print $4}')
+while [ "$STATUS" != "ACTIVE" ]; do
+	echo $ESTATUS
+	ESTATUS=$(nova show $NOMBRE|grep status|awk '{print $4}')
+done
+
 
 echo ""
 echo "###############################################################################"
 echo "# Pasados unos instantes estará creado el escenario completo y podrás acceder #"
 echo "# a $NOMBRE con:                                                              #"
 echo "#                                                                             #"
-echo "# ssh -i .ssh/$CLAVE debian@$IP                                             #"
+echo "# ssh -i ~/.ssh/$CLAVE debian@$IP                                             #"
 echo "#                                                                             #"
 echo "###############################################################################"
+
+echo "Ejecutando receta ansible..."
+echo "[servidores]\n$NOMBRE ansible_ssh_host=$IP ansible_ssh_user=debian">hosts
+ansible-playbook main.yml
+
