@@ -23,7 +23,7 @@
 
 * cloud-config.yaml: Fichero yaml cloud-config que instala un servidor web y mysql al crear una instancia y configura en ella la aplicación web wordpress.
 
-Para accder a la aplicación wordpres tenemos que acceder a la URL:
+Para acceder a la aplicación wordpres tenemos que utilizar la URL:
 
 **http://*nombre_instancia*.novalocal**
 
