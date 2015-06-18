@@ -17,8 +17,8 @@ def get_nova_creds():
 # Me conecto al cloud
 nova = client.Client(**get_nova_creds())
 
-secgroup = nova.security_groups.find(name="default")
-nova.security_group_rules.delete(secgroup.id,ip_protocol="tcp",from_port="3128",to_port="3128",cidr="0.0.0.0/0")
+#secgroup = nova.security_groups.find(name="default")
+#nova.security_group_rules.delete(secgroup.id,ip_protocol="tcp",from_port="3128",to_port="3128",cidr="0.0.0.0/0")
 for nomserver in [nombre1,nombre2]:
 
 	server=nova.servers.find(name=nomserver)

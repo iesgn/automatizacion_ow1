@@ -3,7 +3,7 @@
   sudo: yes
   tasks:
     - name: install apache2+php5
-      apt: name={{ item }} update_cache=yes state=latest
+      apt: name={{ item }} state=latest
       with_items:
         - apache2
         - php5
