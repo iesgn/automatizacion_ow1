@@ -3,7 +3,7 @@ from novaclient.v1_1 import client
 import os,sys
 import time
 
-imagen="Debian 8.0"
+imagen="Ubuntu 14.04.1 LTS - Trusty Tahr - 64 bits"
 red='red1'
 clave='clave-ow'
 seguridad='default'
