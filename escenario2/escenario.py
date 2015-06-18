@@ -4,7 +4,7 @@ import os,sys
 import time
 
 imagen="Ubuntu 14.04.1 LTS - Trusty Tahr - 64 bits"
-red='red1'
+red='red'
 clave='clave-ow'
 seguridad='default'
 sabor='ssd.XXS'

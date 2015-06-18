@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IMAGEN='b10a9d97-dce3-48e9-89f5-955362714c5c'
-RED='red1'
+RED='red'
 CLAVE='clave-ow'
 SEGURIDAD='default'
 SABOR='ssd.XXS'
