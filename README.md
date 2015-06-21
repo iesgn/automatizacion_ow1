@@ -48,4 +48,6 @@ Utilizando resolución estática, añadimos a /etc/hosts de nuestro equipo:
 
 		212.231.128.188 wordpress.novalocal
 
-## Escenario 5 (heat):
+## Escenario 5 (heat): Creación de dos instancias (servidor web y base de datos) con Wordpress instalado
+
+* stack.yaml: Template HOT (Heat Orchestration Template) que crea dos instancias y configura en ellas un servidor web y o tro de base de datos. Instala una aplicación web Wordpress en el servidor web.
