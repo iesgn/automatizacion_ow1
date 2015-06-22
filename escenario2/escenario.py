@@ -3,13 +3,13 @@ from novaclient.v1_1 import client
 import os,sys
 import time
 
-imagen="Ubuntu 14.04.1 LTS - Trusty Tahr - 64 bits"
+imagen="ej_ubuntu_update"
 red='red'
 clave='clave-ow'
 seguridad='default'
-sabor='ssd.XXS'
-nombre1="servidor_web"
-nombre2="servidor_mysql"
+sabor='ssd.XS'
+nombre1="servidor_web3"
+nombre2="servidor_mysql3"
 def get_nova_creds():
     d = {}
     d['username'] = os.environ['OS_USERNAME']
@@ -84,6 +84,6 @@ print "Instancia %s creada y activa... con la ip %s"%(nombre2,floating_ip.ip)
 ip2=floating_ip.ip
 
 fhost=open("hosts","w")
-fhost.write("[servidores_web]\n%s ansible_ssh_host=%s ansible_ssh_user=debian\n[servidor_mysql]\n%s ansible_ssh_host=%s ansible_ssh_user=debian"%(nombre1,ip1,nombre2,ip2))
+fhost.write("[servidores_web]\n%s ansible_ssh_host=%s ansible_ssh_user=ubuntu\n[servidor_mysql]\n%s ansible_ssh_host=%s ansible_ssh_user=ubuntu"%(nombre1,ip1,nombre2,ip2))
 fhost.close()
 os.system("ansible-playbook main.yml")

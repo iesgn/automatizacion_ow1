@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGEN='b10a9d97-dce3-48e9-89f5-955362714c5c'
+IMAGEN='54a727a4-1016-4dc8-a9fa-13c84853794c'
 RED='red'
 CLAVE='clave-ow'
 SEGURIDAD='default'
