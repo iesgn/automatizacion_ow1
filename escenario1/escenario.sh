@@ -45,5 +45,5 @@ done
 
 echo "Ejecutando receta ansible..."
 echo "[servidores]\n$NOMBRE ansible_ssh_host=$IP ansible_ssh_user=debian">hosts
-ansible-playbook main.yml
+#ansible-playbook main.yml
 
