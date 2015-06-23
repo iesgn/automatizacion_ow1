@@ -1,4 +1,4 @@
 [servidores_web]
-servidor_web3 ansible_ssh_host=212.231.129.92 ansible_ssh_user=ubuntu
+servidor_web ansible_ssh_host=212.231.129.110 ansible_ssh_user=ubuntu
 [servidor_mysql]
-servidor_mysql3 ansible_ssh_host=212.231.129.93 ansible_ssh_user=ubuntu
+servidor_mysql ansible_ssh_host=212.231.129.111 ansible_ssh_user=ubuntu

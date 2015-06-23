@@ -1,4 +1,3 @@
-- include: playbooks/commons/main.yaml
 - include: playbooks/apache2/main.yaml
 - include: playbooks/mysql/main.yaml
 - include: playbooks/wordpress/main.yaml

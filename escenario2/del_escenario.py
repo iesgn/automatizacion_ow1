@@ -3,8 +3,8 @@ from novaclient.v1_1 import client
 import os,sys
 import time
 
-nombre1="servidor_web3"
-nombre2="servidor_mysql3"
+nombre1="servidor_web"
+nombre2="servidor_mysql"
 def get_nova_creds():
     d = {}
     d['username'] = os.environ['OS_USERNAME']

@@ -1,6 +1,0 @@
----
-- hosts: all
-  sudo: yes
-  tasks:
-    - name: Ensure system is upgraded (It can take a long time)
-      apt: upgrade=yes update_cache=yes

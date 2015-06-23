@@ -8,8 +8,8 @@ red='red'
 clave='clave-ow'
 seguridad='default'
 sabor='ssd.XS'
-nombre1="servidor_web3"
-nombre2="servidor_mysql3"
+nombre1="servidor_web"
+nombre2="servidor_mysql"
 def get_nova_creds():
     d = {}
     d['username'] = os.environ['OS_USERNAME']
@@ -57,10 +57,7 @@ server1.add_floating_ip(floating_ip)
 
 print "Instancia %s creada y activa... con la ip %s"%(nombre1,floating_ip.ip)
 ip1=floating_ip.ip
-#Selecciono el grupo de seguridad
 
-secgroup = nova.security_groups.find(name="default")
-nova.security_group_rules.create(secgroup.id,ip_protocol="tcp",from_port="3128",to_port="3128",cidr="0.0.0.0/0")
 
 server2 = nova.servers.create(name = nombre2,image = image.id,flavor = flavor.id,nics =[{'net-id': network.id}] ,key_name = keypair.name)
 server2.security_groups.append(nova.security_groups.find(name="default"))
