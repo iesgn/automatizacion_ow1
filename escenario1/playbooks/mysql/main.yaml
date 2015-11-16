@@ -9,9 +9,6 @@
       with_items:
         - mysql-server
         - python-mysqldb 
-      
-    
-         
     
     - name: update mysql root password for all root accounts
       mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}

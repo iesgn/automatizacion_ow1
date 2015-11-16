@@ -1,10 +1,10 @@
 #!/bin/bash
 
-IMAGEN='fe168532-988e-44fb-afc7-a7d93e459f44'
+IMAGEN='7db71d85-4e13-419c-8d12-ed4e9fc01cba'
 RED='red'
-CLAVE='clave-ow'
+CLAVE='clave-openstack'
 SEGURIDAD='default'
-SABOR='ssd.XXS'
+SABOR='local.XXS'
 NOMBRE="pc1"
 
 # Obtenemos el id de la red
@@ -28,11 +28,11 @@ nova floating-ip-associate $NOMBRE $IP
 
 echo ""
 echo "###############################################################################"
-echo "# Pasados unos instantes estará creado el escenario completo y podrás acceder #"
-echo "# a $NOMBRE con:                                                              #"
-echo "#                                                                             #"
-echo "# ssh -i ~/.ssh/$CLAVE debian@$IP                                             #"
-echo "#                                                                             #"
+echo " Pasados unos instantes estará creado el escenario completo y podrás acceder   "
+echo " a $NOMBRE con:                                                                "
+echo ""
+echo " ssh -i ~/.ssh/$CLAVE debian@$IP"
+echo ""
 echo "###############################################################################"
 
 STATUS=$(nova show $NOMBRE|grep status|awk '{print $4}')
@@ -44,6 +44,7 @@ do
 done
 
 echo "Ejecutando receta ansible..."
-echo "[servidores]\n$NOMBRE ansible_ssh_host=$IP ansible_ssh_user=debian">hosts
+echo "[servidores]>hosts"
+echo "$NOMBRE ansible_ssh_host=$IP ansible_ssh_user=debian">>hosts
 #ansible-playbook main.yml
 

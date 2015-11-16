@@ -1,2 +1,7 @@
 [servidores]
-pc1 ansible_ssh_host=212.231.129.104 ansible_ssh_user=debian
+pc1 ansible_ssh_host=212.231.129.58 ansible_ssh_user=debian
+pc1 ansible_ssh_host=212.231.129.59 ansible_ssh_user=debian
+pc1 ansible_ssh_host=212.231.129.60 ansible_ssh_user=debian
+pc1 ansible_ssh_host=212.231.129.62 ansible_ssh_user=debian
+pc1 ansible_ssh_host=212.231.129.63 ansible_ssh_user=debian
+pc1 ansible_ssh_host=212.231.129.64 ansible_ssh_user=debian
