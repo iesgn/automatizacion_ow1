@@ -5,9 +5,9 @@ import time
 
 imagen="ej_ubuntu_update"
 red='red'
-clave='clave-ow'
+clave='clave-openstack'
 seguridad='default'
-sabor='ssd.XS'
+sabor='local.XS'
 nombre1="servidor_web"
 nombre2="servidor_mysql"
 def get_nova_creds():

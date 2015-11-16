@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGEN='44288012-b805-455f-a21f-74ab36c46362'
+IMAGEN='7db71d85-4e13-419c-8d12-ed4e9fc01cba'
 
 # Creamos tres redes
 
@@ -54,20 +54,20 @@ chmod 600 clave_demo.pem
 
 ## Creamos tres instancias ubuntu conectadas a cada una de las redes#
 
-nova boot --flavor ssd.XXXXS --image $IMAGEN \
+nova boot --flavor local.XXXXS --image $IMAGEN \
             --security-groups default\
 	    --key-name clave_demo \
             --nic net-id=$NET_ID1 \
             pc1
 
-nova boot --flavor ssd.XXXXS --image $IMAGEN \
+nova boot --flavor local.XXXXS --image $IMAGEN \
             --security-groups default\
          --key-name clave_demo \
             --nic net-id=$NET_ID2 \
             pc2
 
 
-nova boot --flavor ssd.XXXXS --image $IMAGEN \
+nova boot --flavor local.XXXXS --image $IMAGEN \
             --security-groups default\
          --key-name clave_demo \
             --nic net-id=$NET_ID3 \
@@ -88,12 +88,12 @@ neutron router-update r3 --routes type=dict list=true destination=192.168.10.0/2
 
 echo ""
 echo "###############################################################################"
-echo "# Pasados unos instantes estará creado el escenario completo y podrás acceder #"
-echo "# a pc1 con:                                                                  #"
-echo "#                                                                             #"
-echo "# ssh -i clave_demo $IP                                                       #"
-echo "#                                                                             #"
-echo "# Hay que tener un poco de paciencia porque al crear redes nuevas las         #"
-echo "# instancias tardan un poco más en iniciarse                                  #"
+echo "  Pasados unos instantes estará creado el escenario completo y podrás acceder "
+echo "  a pc1 con:                                                                  "
+echo "                                                                              "
+echo "  ssh -i clave_demo $IP                                                       "
+echo "                                                                              "
+echo "  Hay que tener un poco de paciencia porque al crear redes nuevas las         "
+echo "  instancias tardan un poco más en iniciarse                                  "
 echo "###############################################################################"
 echo ""
