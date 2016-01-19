@@ -84,7 +84,7 @@ resources:
       image: { get_param: image_id }
       flavor: { get_param: instance_type }
       key_name: { get_param: key_name }
-      networks: [{"network":"red de josedom"}]
+      networks: [{"network":"red"}]
       user_data:
         str_replace:
           template: |
@@ -116,7 +116,7 @@ resources:
       image: { get_param: image_id }
       flavor: { get_param: instance_type }
       key_name: { get_param: key_name }
-      networks: [{"network":"red de josedom"}]
+      networks: [{"network":"red"}]
       user_data:
         str_replace:
           template: |
@@ -139,7 +139,7 @@ resources:
             db_name: { get_param: db_name }
             db_user: { get_param: db_username }
             db_password: { get_param: db_password }
-            db_host: { get_attr: [DatabaseServer, networks, "red de josedom", 0] }
+            db_host: { get_attr: [DatabaseServer, networks, "red", 0] }
 
   floating_ip:
     type: OS::Neutron::FloatingIP
@@ -155,13 +155,13 @@ resources:
     type: OS::Neutron::FloatingIPAssociation
     properties:
       floatingip_id: { get_resource: floating_ip }
-      port_id: {get_attr: [DatabaseServer, addresses, "red de josedom", 0, port]}
+      port_id: {get_attr: [DatabaseServer, addresses, "red", 0, port]}
 
   association_1:
     type: OS::Neutron::FloatingIPAssociation
     properties:
       floatingip_id: { get_resource: floating_ip_1}
-      port_id: {get_attr: [WebServer, addresses, "red de josedom", 0, port]}
+      port_id: {get_attr: [WebServer, addresses, "red", 0, port]}
 
 outputs:
   WebsiteURL:
